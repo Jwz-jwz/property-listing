@@ -6,6 +6,7 @@ import data from "../../mock/us-property-listings-100.json";
 import { PhoneIcon } from "../svg/PhoneIcon";
 import { useState } from "react";
 import { SearchCard } from "../utils/SearchCard";
+import Link from "next/link";
 
 export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -20,8 +21,8 @@ export const Header = () => {
   };
 
   return (
-    <div className="w-full flex justify-center mt-[20px]">
-      <div className="container flex p-[10px]">
+    <div className="w-full flex flex-col items-center">
+      <div className="container flex justify-between mt-[20px]">
         <div className="w-[736px] h-[62px] flex gap-[26px]">
           <div className="flex items-center">
             <HeaderIcon />
@@ -50,18 +51,18 @@ export const Header = () => {
                 className="w-[482px] border border-y-[#D3D3D3]"
                 type="text"
               />
-              <div>
-                {filteredValue.map((filtered) => {
-                  return <SearchCard city={filtered?.City} />;
-                })}
-              </div>
               <button className="w-[62px] flex items-center justify-center bg-[#5E81F4] rounded-r-lg">
                 <SearchIcon />
               </button>
             </div>
+            {/* <div>
+              {filteredValue.map((filtered) => {
+                return <SearchCard city={filtered?.City} />;
+              })}
+            </div> */}
           </div>
         </div>
-        <div className="w-[225px]"></div>
+        {/* <div className="w-[225px]"></div> */}
         <div className="flex gap-[50px] items-center">
           <div className="flex gap-[20px]">
             <PhoneIcon />
@@ -81,6 +82,11 @@ export const Header = () => {
             </button>
           </div>
         </div>
+      </div>
+      <div className="container flex flex-col ml-[450px] gap-[5px]">
+        {filteredValue.map((filtered) => {
+          return <SearchCard city={filtered?.City} />;
+        })}
       </div>
     </div>
   );

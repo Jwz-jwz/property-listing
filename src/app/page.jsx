@@ -1,5 +1,11 @@
 import { Header } from "@/components/header/Header";
+import { MainPage } from "@/components/mainpage/MainPage";
 
 export default function Home() {
-  return <Header />;
+  return (
+    <div>
+      <Header />
+      {/* <MainPage /> */}
+    </div>
+  );
 }
