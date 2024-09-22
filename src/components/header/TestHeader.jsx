@@ -1,47 +1,43 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { ResultCard } from "../mainpage/ResultCard";
 
-const SearchBar = () => {
-  const [searchValue, setSearchValue] = useState("");
+function CardList() {
+  const [selectedType, setSelectedType] = useState("all");
 
-  useEffect(() => {
-    // Load search value from localStorage on mount
-    const savedSearchValue = localStorage.getItem("searchValue");
-    if (savedSearchValue) {
-      setSearchValue(savedSearchValue);
-    }
-  }, []);
+  const allCards = [
+    { id: 1, title: "Card 1", type: "type1" },
+    { id: 2, title: "Card 2", type: "type2" },
+    { id: 3, title: "Card 3", type: "type1" },
+    { id: 4, title: "Card 4", type: "type3" },
+  ];
 
-  const handleChange = (event) => {
-    setSearchValue(event.target.value);
+  const handleSelectChange = (event) => {
+    setSelectedType(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Searching for:", searchValue);
-    // Optionally save to localStorage on submit
-    localStorage.setItem("searchValue", searchValue);
-  };
-
-  const handleClear = () => {
-    setSearchValue("");
-    localStorage.removeItem("searchValue");
-  };
+  // Filter cards based on the selected type
+  const filteredCards =
+    selectedType === "all"
+      ? allCards
+      : allCards.filter((card) => card.type === selectedType);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={searchValue}
-        onChange={handleChange}
-        placeholder="Search..."
-      />
-      <button type="submit">Search</button>
-      <button type="button" onClick={handleClear}>
-        Clear
-      </button>
-    </form>
-  );
-};
+    <div>
+      <label htmlFor="cardType">Select Card Type:</label>
+      <select id="cardType" value={selectedType} onChange={handleSelectChange}>
+        <option value="all">All</option>
+        <option value="type1">Type 1</option>
+        <option value="type2">Type 2</option>
+        <option value="type3">Type 3</option>
+      </select>
 
-export default SearchBar;
+      <div className="card-list">
+        {filteredCards.map((card) => (
+          <ResultCard key={card.id} title={card.title} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default CardList;
